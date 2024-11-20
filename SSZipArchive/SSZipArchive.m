@@ -531,6 +531,11 @@ static bool filenameIsDirectory(const char *filename, uint16_t size)
                 continue;
             }
             
+            if ([delegate respondsToSelector: @selector(zipArchiveWillUnzipFileAtIndex:totalFiles:archivePath:unzippedFilePath:)]) {
+                [delegate zipArchiveWillUnzipFileAtIndex: currentFileNumber totalFiles: (NSInteger)globalInfo.number_entry
+                                             archivePath:path unzippedFilePath: fullPath];
+            }
+            
             if (isDirectory && !fileIsSymbolicLink) {
                 // nothing to read/write for a directory
             } else if (!fileIsSymbolicLink) {
